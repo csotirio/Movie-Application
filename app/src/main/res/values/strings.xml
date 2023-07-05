@@ -3,4 +3,8 @@
     <string name="empty" />
 
     <string name="splash_title">Movies Application</string>
+
+    <string name="all_movies_bottom_navigation_title">All Movies</string>
+    <string name="search_movies_bottom_navigation_title">Search Movie</string>
+    <string name="favorite_movies_bottom_navigation_title">Favorite Movies</string>
 </resources>

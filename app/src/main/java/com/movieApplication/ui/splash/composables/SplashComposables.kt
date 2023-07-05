@@ -26,18 +26,18 @@ import com.movieApplication.R
 import com.movieApplication.ui.general.BigText
 import com.movieApplication.ui.theme.MovieApplicationTheme
 
-internal typealias NavigateToAllMoviesScreen = () -> Unit
+internal typealias NavigateToLobby = () -> Unit
 
 @Composable
 fun SplashScreen(
-    navigateToAllMoviesScreen: NavigateToAllMoviesScreen
+    navigateToLobby: NavigateToLobby
 ) {
-    SplashContent(navigateToAllMoviesScreen = navigateToAllMoviesScreen)
+    SplashContent(navigateToLobby = navigateToLobby)
 }
 
 @Composable
 fun SplashContent(
-    navigateToAllMoviesScreen: NavigateToAllMoviesScreen
+    navigateToLobby: NavigateToLobby
 ) {
     var state by remember {
         mutableStateOf(false)
@@ -57,7 +57,7 @@ fun SplashContent(
 
     LaunchedEffect(key1 = animationFinished) {
         if (animationFinished) {
-            navigateToAllMoviesScreen()
+            navigateToLobby()
         }
     }
 
