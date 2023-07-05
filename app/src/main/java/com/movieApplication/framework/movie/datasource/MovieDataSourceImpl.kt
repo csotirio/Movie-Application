@@ -3,8 +3,8 @@ package com.movieApplication.framework.movie.datasource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.movieApplication.data.movie.datasource.MovieDataSource
 import com.movieApplication.data.movie.catalog.model.RemoteMoviesCatalogItem
+import com.movieApplication.data.movie.datasource.MovieDataSource
 import com.movieApplication.framework.movie.api.MovieApi
 import com.movieApplication.framework.movie.pager.RemoteNowPlayingMoviesPaging
 import com.movieApplication.framework.movie.pager.RemotePopularMoviesPaging
@@ -13,7 +13,7 @@ import com.movieApplication.framework.movie.pager.RemoteUpcomingMoviesPaging
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MovieDatasourceImpl @Inject constructor(
+class MovieDataSourceImpl @Inject constructor(
     private val api: MovieApi
 ) : MovieDataSource {
 

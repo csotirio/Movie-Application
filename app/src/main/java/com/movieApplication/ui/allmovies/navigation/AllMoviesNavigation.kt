@@ -4,6 +4,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.movieApplication.ui.allmovies.composables.AllMoviesScreen
 import com.movieApplication.ui.allmovies.viewmodel.AllMoviesViewModel
 
@@ -17,7 +18,9 @@ fun NavGraphBuilder.allMoviesScreen() {
         AllMoviesScreen(
             movieTypes = viewMode.movieTypes,
             selectedType = viewMode.selectedType.value,
-            onMovieTypeClicked = viewMode::onMovieTypeClicked
+            movies = viewMode.movies.collectAsLazyPagingItems(),
+            onMovieTypeClicked = viewMode::onMovieTypeClicked,
+            onMovieCatalogClicked = {}
         )
     }
 }
