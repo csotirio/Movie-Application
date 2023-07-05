@@ -40,3 +40,32 @@ fun BigText(
         maxLines = maxLines
     )
 }
+
+@Composable
+fun NormalText(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = Color.Unspecified,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    lineHeightMultiplier: Float = 1f,
+    style: TextStyle? = null,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        style = style ?: MaterialTheme.typography.headlineMedium,
+        color = color,
+        letterSpacing = letterSpacing,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        lineHeight = (20 * lineHeightMultiplier).sp,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines
+    )
+}
