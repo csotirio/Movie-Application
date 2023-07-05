@@ -2,16 +2,23 @@ package com.movieApplication.ui.lobby.navhost
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import com.movieApplication.ui.allmovies.navigation.AllMoviesScreenRoute
+import com.movieApplication.ui.allmovies.navigation.allMoviesScreen
+import com.movieApplication.ui.favorite.navigation.favoriteScreen
+import com.movieApplication.ui.search.navigation.searchScreen
 
 
 @Composable
 fun LobbyNavHost(
     navController: NavHostController
 ) {
-//    NavHost(
-//        navController = navController,
-//        startDestination = SplashScreenRoute
-//    ) {
-//        splashScreen(navigateToAllMoviesScreen = {})
-//    }
+    NavHost(
+        navController = navController,
+        startDestination = AllMoviesScreenRoute
+    ) {
+        allMoviesScreen()
+        searchScreen()
+        favoriteScreen()
+    }
 }

@@ -7,8 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.movieApplication.ui.allmovies.navigation.navigateToAllMoviesScreen
+import com.movieApplication.ui.favorite.navigation.navigateToFavoriteScreen
 import com.movieApplication.ui.lobby.model.LobbyBottomNavigationUiItem
 import com.movieApplication.ui.lobby.navhost.LobbyNavHost
+import com.movieApplication.ui.search.navigation.navigateToSearchScreen
 import com.movieApplication.ui.theme.MovieApplicationTheme
 
 @Composable
@@ -21,14 +24,13 @@ fun LobbyScreen(
 @Composable
 fun LobbyContent(bottomNavigationUiItems: List<LobbyBottomNavigationUiItem>) {
     val navController = rememberNavController()
-
     Scaffold(
         bottomBar = {
             NavBar(
                 bottomNavigationUiItems = bottomNavigationUiItems,
-                onAllMoviesClicked = { },
-                onSearchMovieClicked = { },
-                onFavoritesMovieClicked = { }
+                onAllMoviesClicked = { navController.navigateToAllMoviesScreen() },
+                onSearchMovieClicked = { navController.navigateToSearchScreen() },
+                onFavoritesMovieClicked = { navController.navigateToFavoriteScreen() }
             )
         },
         content = { innerPadding ->

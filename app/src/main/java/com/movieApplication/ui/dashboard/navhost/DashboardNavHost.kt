@@ -17,7 +17,10 @@ fun DashboardNavHost(
         navController = navController,
         startDestination = SplashScreenRoute
     ) {
-        splashScreen(navigateToLobby = { navController.navigateToLobbyScreen() })
+        splashScreen(navigateToLobby = {
+            navController.popBackStack()
+            navController.navigateToLobbyScreen()
+        })
 
         lobbyScreen()
     }
