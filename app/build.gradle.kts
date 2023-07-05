@@ -52,6 +52,7 @@ android {
             dimension = "env"
             resValue("string", "app_name", "Movies Application DEV")
             buildConfigField("String", "TMDB_HOST_NAME", "\"https://api.themoviedb.org\"")
+            buildConfigField("String", "TMDB_MEDIA_HOST_NAME", "\"https://image.tmdb.org/t/p/original\"")
             buildConfigField("String", "TMDB_KEY", "\"6fadde8eff17f65589b1972a2ee6c284\"")
             applicationIdSuffix = ".dev"
         }
@@ -59,6 +60,7 @@ android {
             dimension = "env"
             resValue("string", "app_name", "Movies Application")
             buildConfigField("String", "TMDB_HOST_NAME", "\"https://api.themoviedb.org\"")
+            buildConfigField("String", "TMDB_MEDIA_HOST_NAME", "\"https://image.tmdb.org/t/p/original\"")
             buildConfigField("String", "TMDB_KEY", "\"6fadde8eff17f65589b1972a2ee6c284\"")
         }
     }

@@ -7,4 +7,9 @@
     <string name="all_movies_bottom_navigation_title">All Movies</string>
     <string name="search_movies_bottom_navigation_title">Search Movie</string>
     <string name="favorite_movies_bottom_navigation_title">Favorite Movies</string>
+
+    <string name="playing_now_label">Playing now</string>
+    <string name="popular_label">Popular</string>
+    <string name="top_rated_label">Top rated</string>
+    <string name="upcoming_label">Upcoming</string>
 </resources>
