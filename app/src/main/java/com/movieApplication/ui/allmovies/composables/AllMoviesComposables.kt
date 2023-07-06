@@ -31,7 +31,9 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.movieApplication.ui.allmovies.model.MoviesCatalogUiItem
 import com.movieApplication.ui.allmovies.model.MoviesTypeSelectionUiItem
 import com.movieApplication.ui.general.NormalText
+import com.movieApplication.ui.theme.LightBlue
 import com.movieApplication.ui.theme.MovieApplicationTheme
+import com.movieApplication.ui.theme.NavyBlue
 import com.movieApplication.ui.theme.SpacingCustom_12dp
 import com.movieApplication.ui.theme.SpacingDefault_16dp
 import com.movieApplication.ui.theme.SpacingHalf_8dp
@@ -72,7 +74,7 @@ fun AllMoviesContent(
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = SpacingHalf_8dp),
+                    .padding(SpacingHalf_8dp),
                 mainAxisSpacing = SpacingHalf_8dp,
                 crossAxisSpacing = SpacingHalf_8dp
             ) {
@@ -115,9 +117,20 @@ fun MovieTypeSelectionBtn(
         animationSpec = tween(durationMillis = 300)
     )
 
+    val backgroundColor = if (selectedType == moviesType) {
+        NavyBlue
+    } else {
+        LightBlue
+    }
+
+    val backgroundColorState = animateColorAsState(
+        targetValue = backgroundColor,
+        animationSpec = tween(durationMillis = 300)
+    )
+
     Row(modifier = Modifier
         .clip(RoundedCornerShape(SpacingCustom_12dp))
-        .background(Color.Red)
+        .background(backgroundColorState.value)
         .clickable {
             onMovieTypeClicked(moviesType)
         }
