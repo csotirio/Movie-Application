@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.movieApplication.ui.allmovies.mapper.MoviesCatalogUiMapper
 import com.movieApplication.ui.allmovies.model.MoviesCatalogUiItem
 import com.movieApplication.ui.allmovies.model.MoviesTypeSelectionUiItem
@@ -37,24 +38,30 @@ class AllMoviesViewModel @Inject constructor(
     private val _movies: MutableStateFlow<PagingData<MoviesCatalogUiItem>> = MutableStateFlow(PagingData.empty())
     val movies = _movies.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            _movies.emitAll(moviesCatalogUiMapper(getNowPlayingMoviesUseCase().cachedIn(viewModelScope)))
+        }
+    }
+
     fun onMovieTypeClicked(type: MoviesTypeSelectionUiItem) {
         _selectedType.value = type
         viewModelScope.launch {
             val response = when (type) {
                 MoviesTypeSelectionUiItem.PlayingNow -> {
-                    getNowPlayingMoviesUseCase()
+                    getNowPlayingMoviesUseCase().cachedIn(viewModelScope)
                 }
 
                 MoviesTypeSelectionUiItem.Popular -> {
-                    getPopularMoviesUseCase()
+                    getPopularMoviesUseCase().cachedIn(viewModelScope)
                 }
 
                 MoviesTypeSelectionUiItem.TopRated -> {
-                    topRatedMoviesUseCase()
+                    topRatedMoviesUseCase().cachedIn(viewModelScope)
                 }
 
                 MoviesTypeSelectionUiItem.Upcoming -> {
-                    upcomingMoviesUseCase()
+                    upcomingMoviesUseCase().cachedIn(viewModelScope)
                 }
             }
             _movies.emitAll(moviesCatalogUiMapper(moviesCatalogItem = response))
