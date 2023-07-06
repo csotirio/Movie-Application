@@ -2,6 +2,8 @@ package com.movieApplication.ui.details.composables
 
 import android.annotation.SuppressLint
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,9 +15,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -32,8 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,17 +61,21 @@ import com.movieApplication.ui.theme.SpacingHalf_8dp
 import com.movieApplication.ui.theme.SpacingQuarter_4dp
 
 typealias OnBackClick = () -> Unit
+typealias OnFavoriteClick = (MovieDetailsUiItem) -> Unit
+
 
 @Composable
 fun DetailsScreen(
     movieDetailsUiState: State<MovieDetailsUiState>,
     movieDetailsCastUiState: State<MovieDetailsCastUiState>,
-    onBackClick: OnBackClick
+    onBackClick: OnBackClick,
+    onFavoriteClick: OnFavoriteClick
 ) {
     DetailsContent(
         movieDetailsUiState = movieDetailsUiState,
         movieDetailsCastUiState = movieDetailsCastUiState,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onFavoriteClick = onFavoriteClick
     )
 }
 
@@ -77,7 +83,8 @@ fun DetailsScreen(
 fun DetailsContent(
     movieDetailsUiState: State<MovieDetailsUiState>,
     movieDetailsCastUiState: State<MovieDetailsCastUiState>,
-    onBackClick: OnBackClick
+    onBackClick: OnBackClick,
+    onFavoriteClick: OnFavoriteClick
 ) {
 
     Column(
@@ -94,7 +101,8 @@ fun DetailsContent(
         ) {
 
             catalogContent(
-                movieDetailsUiState = movieDetailsUiState
+                movieDetailsUiState = movieDetailsUiState,
+                onFavoriteClick = onFavoriteClick
             )
 
             item {
@@ -133,7 +141,6 @@ fun Header(
                     .clickable { onCloseClick() },
                 painter = painterResource(id = R.drawable.ic_back),
                 contentDescription = null
-
             )
         } else {
             Spacer(
@@ -164,13 +171,14 @@ fun Header(
 }
 
 fun LazyListScope.catalogContent(
-    movieDetailsUiState: State<MovieDetailsUiState>
+    movieDetailsUiState: State<MovieDetailsUiState>,
+    onFavoriteClick: OnFavoriteClick
 ) {
     when (val movieDetailsUiStateValue = movieDetailsUiState.value) {
         is MovieDetailsUiState.DefaultUiStateMovies -> {
 
             detailsDefaultContent(
-                movieDetailsUiStateValue.movieDetailsItem, false
+                movieDetailsUiStateValue.movieDetailsItem, false, onFavoriteClick
             )
 
         }
@@ -217,10 +225,22 @@ fun MovieDetailsCastContent(
 
 fun LazyListScope.detailsDefaultContent(
     moviesDetailsUiItem: MovieDetailsUiItem,
-    boolean: Boolean
+    boolean: Boolean,
+    onFavoriteClick: OnFavoriteClick
 ) {
     item { DetailsImage(moviesDetailsUiItem.imageUrl, boolean) }
-    item { TitleText(title = moviesDetailsUiItem.title, boolean) }
+    item {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            TitleText(title = moviesDetailsUiItem.title, boolean)
+            Favorite(
+                moviesDetailsUiItem.isFavorite.value,
+                { onFavoriteClick(moviesDetailsUiItem) }
+            )
+        }
+    }
     item { RatingText(overview = "Rating: " + moviesDetailsUiItem.voteAverage + " /10", boolean) }
     item {
         LazyRow(
@@ -271,10 +291,9 @@ fun MoviesDefaultCastContent(
 fun MovieItem(
     modifier: Modifier = Modifier, boolean: Boolean, movieDetailsCastUiItem: MovieDetailsCastUiItem
 ) {
-    val currentWidthDp = LocalConfiguration.current.screenWidthDp
     AsyncImage(
         modifier = modifier
-            .width((currentWidthDp * 0.3f).dp)
+            .height(60.dp)
             .aspectRatio(1f)
             .clip(CircleShape)
             .placeholder(
@@ -317,6 +336,34 @@ private fun TitleText(title: String, boolean: Boolean) {
         style = MaterialTheme.typography.titleLarge,
         color = LightBlue,
         text = title,
+    )
+}
+
+@Composable
+private fun Favorite(
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit
+) {
+    val heartColor = if (isFavorite) {
+        Color.Red
+    } else {
+        Color.Black
+    }
+
+    val heartColorState = animateColorAsState(
+        targetValue = heartColor,
+        animationSpec = tween(durationMillis = 300)
+    )
+
+    Image(
+        modifier = Modifier
+            .height(40.dp)
+            .aspectRatio(1f)
+            .padding(end = SpacingDefault_16dp, top = SpacingHalf_8dp)
+            .clickable { onFavoriteClick() },
+        painter = painterResource(id = R.drawable.ic_favorites),
+        colorFilter = ColorFilter.tint(heartColorState.value),
+        contentDescription = null
     )
 }
 
@@ -373,7 +420,8 @@ fun DetailsScreenPreview() {
         DetailsContent(
             movieDetailsUiState = mutableStateOf(MovieDetailsUiState.LoadingUiStateMovies),
             movieDetailsCastUiState = mutableStateOf(MovieDetailsCastUiState.LoadingUiStateMovies),
-            {}
+            {},
+            { }
         )
     }
 }

@@ -21,4 +21,13 @@ interface MovieRepository {
     suspend fun getMovieDetails(movieId: String): MovieDetailsResult
 
     suspend fun getMovieDetailsCast(movieId: String): MoviesDetailsCastResult
+
+    suspend fun addMovieToFavorite(movie: MoviesCatalogItem)
+
+    suspend fun getAllFavoriteMovies(): Flow<List<MoviesCatalogItem>>
+
+    suspend fun removeFromFavoriteMovies(movieId: String)
+
+    suspend fun isFavoriteMovie(movieId: String): Boolean
+
 }

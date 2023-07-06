@@ -5,6 +5,7 @@ import com.movieApplication.data.movie.catalog.mapper.MoviesCatalogMapper
 import com.movieApplication.data.movie.datasource.MovieDataSource
 import com.movieApplication.data.movie.details.mapper.MovieDetailsCastMapper
 import com.movieApplication.data.movie.details.mapper.MovieDetailsMapper
+import com.movieApplication.data.movie.local.FavoriteMoviesDatabase
 import com.movieApplication.domain.movie.catalog.MoviesCatalogItem
 import com.movieApplication.domain.movie.details.MovieDetailsResult
 import com.movieApplication.domain.movie.details.MoviesDetailsCastResult
@@ -14,6 +15,7 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val dataSource: MovieDataSource,
+    private val database: FavoriteMoviesDatabase,
     private val moviesCatalogMapper: MoviesCatalogMapper,
     private val movieDetailsMapper: MovieDetailsMapper,
     private val movieDetailsCastMapper: MovieDetailsCastMapper
@@ -52,6 +54,22 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getMovieDetailsCast(movieId: String): MoviesDetailsCastResult {
         val remoteMovieDetailsCastResponse = dataSource.getMovieDetailsCast(movieId = movieId)
         return movieDetailsCastMapper(remoteMovieDetailsCastItemsResponse = remoteMovieDetailsCastResponse)
+    }
+
+    override suspend fun addMovieToFavorite(movie: MoviesCatalogItem) {
+        database.favoriteMoviesDao.addToFavoriteMovies(movie)
+    }
+
+    override suspend fun getAllFavoriteMovies(): Flow<List<MoviesCatalogItem>> {
+        return database.favoriteMoviesDao.getAllFavoriteMovies()
+    }
+
+    override suspend fun removeFromFavoriteMovies(movieId: String) {
+        database.favoriteMoviesDao.removeFromFavoriteMovies(movieId)
+    }
+
+    override suspend fun isFavoriteMovie(movieId: String): Boolean {
+        return database.favoriteMoviesDao.isFavoriteMovie(movieId) > 0
     }
 
 }

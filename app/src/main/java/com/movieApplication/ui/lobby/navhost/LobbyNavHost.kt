@@ -25,7 +25,9 @@ fun LobbyNavHost(
         searchScreen(
             onMovieCatalogClicked = { id -> navController.navigateToDetailsScreen(id = id) }
         )
-        favoriteScreen()
+        favoriteScreen(
+            onMovieCatalogClicked = { id -> navController.navigateToDetailsScreen(id = id) }
+        )
         detailsScreen(onBackClick = { navController.navigateUp() })
     }
 }

@@ -34,7 +34,8 @@ fun NavGraphBuilder.detailsScreen(
         DetailsScreen(
             movieDetailsUiState = viewModel.movieDetailsStateUi,
             movieDetailsCastUiState = viewModel.movieDetailsCastUiState,
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onFavoriteClick = viewModel::onFavoriteClicked
         )
     }
 }

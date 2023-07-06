@@ -1,5 +1,6 @@
 package com.movieApplication.ui.details.mapper
 
+import androidx.compose.runtime.mutableStateOf
 import com.movieApplication.BuildConfig
 import com.movieApplication.domain.movie.details.MovieDetailsCastItem
 import com.movieApplication.domain.movie.details.MovieDetailsItem
@@ -8,14 +9,15 @@ import com.movieApplication.ui.details.model.MovieDetailsUiItem
 import javax.inject.Inject
 
 class MovieDetailsUiMapper @Inject constructor() {
-    operator fun invoke(movieDetailsItem: MovieDetailsItem): MovieDetailsUiItem {
+    operator fun invoke(movieDetailsItem: MovieDetailsItem, isFavorite: Boolean): MovieDetailsUiItem {
         return MovieDetailsUiItem(
             id = movieDetailsItem.id,
             title = movieDetailsItem.title,
             description = movieDetailsItem.description,
             imageUrl = movieDetailsItem.imageUrl,
             voteAverage = movieDetailsItem.voteAverage,
-            genres = movieDetailsItem.genres
+            genres = movieDetailsItem.genres,
+            isFavorite = mutableStateOf(isFavorite)
         )
     }
 }

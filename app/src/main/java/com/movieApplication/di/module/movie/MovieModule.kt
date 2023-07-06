@@ -1,7 +1,10 @@
 package com.movieApplication.di.module.movie
 
+import android.app.Application
+import androidx.room.Room
 import com.movieApplication.BuildConfig
 import com.movieApplication.data.movie.datasource.MovieDataSource
+import com.movieApplication.data.movie.local.FavoriteMoviesDatabase
 import com.movieApplication.data.movie.repository.MovieRepositoryImpl
 import com.movieApplication.di.module.qualifier.GeneralApiOkHttpClient
 import com.movieApplication.domain.movie.repository.MovieRepository
@@ -57,6 +60,17 @@ object MovieModule {
             .build()
             .create(MovieApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun providesMovieDatabase(application: Application): FavoriteMoviesDatabase {
+        return Room.databaseBuilder(
+            application.applicationContext,
+            FavoriteMoviesDatabase::class.java,
+            "favorite_movies_db"
+        ).fallbackToDestructiveMigration().build()
+    }
+
 }
 
 @Module

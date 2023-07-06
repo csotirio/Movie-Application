@@ -23,5 +23,16 @@ class MoviesCatalogUiMapper @Inject constructor() {
             }
         }
     }
+
+    operator fun invoke(moviesCatalogItem: List<MoviesCatalogItem>): List<MoviesCatalogUiItem> {
+        return moviesCatalogItem.map { item ->
+            MoviesCatalogUiItem(
+                id = item.id,
+                titleRes = item.title,
+                descriptionRes = item.description,
+                imageUrl = item.imageUrl
+            )
+        }
+    }
 }
 

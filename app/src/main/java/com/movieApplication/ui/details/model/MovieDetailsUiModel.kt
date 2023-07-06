@@ -1,5 +1,6 @@
 package com.movieApplication.ui.details.model
 
+import androidx.compose.runtime.MutableState
 import com.movieApplication.data.movie.details.model.RemoteMovieDetailsGenresItem
 
 
@@ -23,7 +24,8 @@ data class MovieDetailsUiItem(
     val description: String,
     val imageUrl: String,
     val voteAverage: String,
-    val genres: List<RemoteMovieDetailsGenresItem>
+    val genres: List<RemoteMovieDetailsGenresItem>,
+    val isFavorite: MutableState<Boolean>
 )
 
 data class MovieDetailsCastUiItem(
