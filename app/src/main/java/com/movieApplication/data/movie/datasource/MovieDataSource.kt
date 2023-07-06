@@ -2,6 +2,8 @@ package com.movieApplication.data.movie.datasource
 
 import androidx.paging.PagingData
 import com.movieApplication.data.movie.catalog.model.RemoteMoviesCatalogItem
+import com.movieApplication.data.movie.details.model.RemoteMovieDetailsCastItemsResponse
+import com.movieApplication.data.movie.details.model.RemoteMovieDetailsResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MovieDataSource {
@@ -14,4 +16,7 @@ interface MovieDataSource {
 
     fun getNowPlayingMovies(): Flow<PagingData<RemoteMoviesCatalogItem>>
 
+    suspend fun getMovieDetails(movieId: String): RemoteMovieDetailsResponse
+
+    suspend fun getMovieDetailsCast(movieId: String): RemoteMovieDetailsCastItemsResponse
 }

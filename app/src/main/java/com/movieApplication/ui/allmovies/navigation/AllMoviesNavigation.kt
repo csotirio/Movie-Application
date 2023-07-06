@@ -6,11 +6,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.movieApplication.ui.allmovies.composables.AllMoviesScreen
+import com.movieApplication.ui.allmovies.composables.OnMovieCatalogClicked
 import com.movieApplication.ui.allmovies.viewmodel.AllMoviesViewModel
 
 const val AllMoviesScreenRoute = "all_movies_screen"
 
-fun NavGraphBuilder.allMoviesScreen() {
+fun NavGraphBuilder.allMoviesScreen(
+    onMovieCatalogClicked: OnMovieCatalogClicked
+) {
     composable(AllMoviesScreenRoute) {
 
         val viewMode = hiltViewModel<AllMoviesViewModel>()
@@ -20,7 +23,7 @@ fun NavGraphBuilder.allMoviesScreen() {
             selectedType = viewMode.selectedType.value,
             movies = viewMode.movies.collectAsLazyPagingItems(),
             onMovieTypeClicked = viewMode::onMovieTypeClicked,
-            onMovieCatalogClicked = {}
+            onMovieCatalogClicked = onMovieCatalogClicked
         )
     }
 }

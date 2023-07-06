@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.movieApplication.ui.allmovies.navigation.AllMoviesScreenRoute
 import com.movieApplication.ui.allmovies.navigation.allMoviesScreen
+import com.movieApplication.ui.details.navigation.detailsScreen
+import com.movieApplication.ui.details.navigation.navigateToDetailsScreen
 import com.movieApplication.ui.favorite.navigation.favoriteScreen
 import com.movieApplication.ui.search.navigation.searchScreen
 
@@ -17,8 +19,11 @@ fun LobbyNavHost(
         navController = navController,
         startDestination = AllMoviesScreenRoute
     ) {
-        allMoviesScreen()
+        allMoviesScreen(
+            onMovieCatalogClicked = { id -> navController.navigateToDetailsScreen(id = id) }
+        )
         searchScreen()
         favoriteScreen()
+        detailsScreen(onBackClick = { navController.navigateUp() })
     }
 }

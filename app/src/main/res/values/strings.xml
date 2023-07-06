@@ -12,4 +12,6 @@
     <string name="popular_label">Popular</string>
     <string name="top_rated_label">Top rated</string>
     <string name="upcoming_label">Upcoming</string>
+
+    <string name="movie_details_title">Details</string>
 </resources>
