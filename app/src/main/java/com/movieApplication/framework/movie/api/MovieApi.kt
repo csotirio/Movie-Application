@@ -21,6 +21,9 @@ interface MovieApi {
     @GET("3/movie/now_playing")
     suspend fun getNowPlayingMovies(@Query("api_key") apiKey: String, @Query("page") page: Int): RemoteMoviesCatalogResponse
 
+    @GET("3/search/movie")
+    suspend fun getSearchedMovies(@Query("api_key") apiKey: String, @Query("page") page: Int, @Query("query") movie: String): RemoteMoviesCatalogResponse
+
     @GET("3/movie/{movieId}")
     suspend fun getMovieDetails(@Path(value = "movieId") movieId: String, @Query("api_key") apiKey: String): RemoteMovieDetailsResponse
 

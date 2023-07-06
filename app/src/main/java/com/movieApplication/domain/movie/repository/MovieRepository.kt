@@ -16,6 +16,8 @@ interface MovieRepository {
 
     fun getNowPlayingMovies(): Flow<PagingData<MoviesCatalogItem>>
 
+    fun getSearchedMovies(searchedMovie: String): Flow<PagingData<MoviesCatalogItem>>
+
     suspend fun getMovieDetails(movieId: String): MovieDetailsResult
 
     suspend fun getMovieDetailsCast(movieId: String): MoviesDetailsCastResult

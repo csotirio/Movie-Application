@@ -39,6 +39,11 @@ class MovieRepositoryImpl @Inject constructor(
         return moviesCatalogMapper(remoteMoviesCatalogResponse = remoteMoviesCatalogResponse)
     }
 
+    override fun getSearchedMovies(searchedMovie: String): Flow<PagingData<MoviesCatalogItem>> {
+        val remoteMoviesCatalogResponse = dataSource.getSearchedMovies(searchedMovie)
+        return moviesCatalogMapper(remoteMoviesCatalogResponse = remoteMoviesCatalogResponse)
+    }
+
     override suspend fun getMovieDetails(movieId: String): MovieDetailsResult {
         val remoteMovieDetailsResponse = dataSource.getMovieDetails(movieId = movieId)
         return movieDetailsMapper(remoteMovieDetailsResponse = remoteMovieDetailsResponse)

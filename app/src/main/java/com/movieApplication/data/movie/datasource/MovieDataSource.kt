@@ -16,6 +16,8 @@ interface MovieDataSource {
 
     fun getNowPlayingMovies(): Flow<PagingData<RemoteMoviesCatalogItem>>
 
+    fun getSearchedMovies(searchedMovie: String): Flow<PagingData<RemoteMoviesCatalogItem>>
+
     suspend fun getMovieDetails(movieId: String): RemoteMovieDetailsResponse
 
     suspend fun getMovieDetailsCast(movieId: String): RemoteMovieDetailsCastItemsResponse

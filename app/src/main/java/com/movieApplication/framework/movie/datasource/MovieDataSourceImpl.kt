@@ -11,6 +11,7 @@ import com.movieApplication.data.movie.details.model.RemoteMovieDetailsResponse
 import com.movieApplication.framework.movie.api.MovieApi
 import com.movieApplication.framework.movie.pager.RemoteNowPlayingMoviesPaging
 import com.movieApplication.framework.movie.pager.RemotePopularMoviesPaging
+import com.movieApplication.framework.movie.pager.RemoteSearchedMoviesPaging
 import com.movieApplication.framework.movie.pager.RemoteTopRatedMoviesPaging
 import com.movieApplication.framework.movie.pager.RemoteUpcomingMoviesPaging
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +67,19 @@ class MovieDataSourceImpl @Inject constructor(
             ), pagingSourceFactory = {
                 RemoteNowPlayingMoviesPaging(
                     api = api
+                )
+            }).flow
+    }
+
+    override fun getSearchedMovies(searchedMovie: String): Flow<PagingData<RemoteMoviesCatalogItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                initialLoadSize = 20
+            ), pagingSourceFactory = {
+                RemoteSearchedMoviesPaging(
+                    api = api,
+                    searchedMovie = searchedMovie
                 )
             }).flow
     }

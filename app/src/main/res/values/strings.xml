@@ -14,4 +14,7 @@
     <string name="upcoming_label">Upcoming</string>
 
     <string name="movie_details_title">Details</string>
+
+    <string name="search_for_movie_title">Search for a movie</string>
+    <string name="search_for_movie_btn">Search</string>
 </resources>

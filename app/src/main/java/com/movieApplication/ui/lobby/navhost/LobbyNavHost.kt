@@ -22,7 +22,9 @@ fun LobbyNavHost(
         allMoviesScreen(
             onMovieCatalogClicked = { id -> navController.navigateToDetailsScreen(id = id) }
         )
-        searchScreen()
+        searchScreen(
+            onMovieCatalogClicked = { id -> navController.navigateToDetailsScreen(id = id) }
+        )
         favoriteScreen()
         detailsScreen(onBackClick = { navController.navigateUp() })
     }
