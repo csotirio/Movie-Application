@@ -3,6 +3,7 @@ package com.movieApplication.ui.search.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.movieApplication.ui.allmovies.mapper.MoviesCatalogUiMapper
 import com.movieApplication.ui.allmovies.model.MoviesCatalogUiItem
 import com.movieApplication.usecase.movie.search.GetSearchedMoviesUseCase
@@ -24,7 +25,7 @@ class SearchViewModel @Inject constructor(
 
     fun onSearchClicked(searchedName: String) {
         viewModelScope.launch {
-            val response = getSearchedMoviesUseCase(searchedName)
+            val response = getSearchedMoviesUseCase(searchedName).cachedIn(viewModelScope)
             _searchedMovies.emitAll(moviesCatalogUiMapper(moviesCatalogItem = response))
         }
     }
